@@ -11,7 +11,7 @@ namespace lab2
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            bool continueProgram = true;
+            bool continueProgram = true; // флаг, пока true — программа работает
 
             while (continueProgram)
             {
@@ -22,7 +22,9 @@ namespace lab2
                 TypeText("\n0. Вихід");
                 TypeText("\nВаш вибір: ");
 
-                string choice = Console.ReadLine()?.Trim();
+                string choice = Console.ReadLine()?.Trim(); // прочитываем, что написал пользователь,
+                                                        //убраем лишние пробелы, и если вдруг null
+                                                       //(пользователь ничего не ввел) — не даем программе упасть
 
                 switch (choice)
                 {
@@ -59,8 +61,10 @@ namespace lab2
         {
             TypeText("\nЗавдання 1: Індекс першого від'ємного числа\n");
 
+            // Список вещественных чисел 
             List<double> numbers = ListOfDoubles();
 
+            // Проверка если пользователь нычего не ввел
             if (numbers.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -69,16 +73,20 @@ namespace lab2
                 return;
             }
 
-            int index = -1;
-            for (int i = 0; i < numbers.Count; i++)
+            // Ищем индекс первого отрицательного элемента
+            int index = -1; // Индекс -1 означает, что не нашли 
+            
+            for (int i = 0; i < numbers.Count; i++)  // .Count своцство которое есть у любого объекта списка
             {
-                if (numbers[i] < 0)
+                if (numbers[i] < 0)  // Если число отрицательное
                 {
-                    index = i;
+                    index = i;     // запоминаем его позицию
                     break;
                 }
             }
 
+            // Выводим результат взависимости от того, нашли отрицательное или нет
+            
             if (index != -1)
             {
                 TypeText($"\nПерше від'ємне число знайдено на індексі: {index} (значення: {numbers[index]})");
@@ -96,8 +104,10 @@ namespace lab2
         {
             TypeText("\nЗавдання 2: Розділення списку на додатні та від'ємні числа\n");
 
+            // Список целых чисел
             List<int> numbers = ListOfIntegers();
 
+            // Проверка на пустой список
             if (numbers.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -106,17 +116,20 @@ namespace lab2
                 return;
             }
 
+            // Создаем два пустых списка для результатов
             List<int> positive = new List<int>();
             List<int> negative = new List<int>();
 
+            // Проходим по всем числам спискам
             foreach (int num in numbers)
             {
                 if (num > 0)
-                    positive.Add(num);
+                    positive.Add(num);  // положительные пойдут в спысок позитивных
                 else if (num < 0)
-                    negative.Add(num);
+                    negative.Add(num); // негативные пойдут в список негативных
             }
 
+            // Вывод результатов
             TypeText("\nДодатні числа:");
             PrintList(positive, "додатних");
 
@@ -129,8 +142,11 @@ namespace lab2
 
         static List<double> ListOfDoubles()
         {
+            // Создаем пустой список
             List<double> list = new List<double>();
 
+            // Просим ввод пользователя
+            
             TypeText("\nЯкщо бажаєте ввести числа вручну введіть (в).\nЯкщо хочете згенерувати випадкові числа введіть (г). \nВаш вибір: ");
             string mode = Console.ReadLine()?.Trim().ToLower();
 
@@ -148,7 +164,8 @@ namespace lab2
 
                     try
                     {
-                        double number = double.Parse(input);
+                        double number = double.Parse(input); // пытаемся преобразовать строку в double
+                                                             // если не вышло , отлавливаем все исключения
                         list.Add(number);
                     }
                     catch
@@ -159,7 +176,7 @@ namespace lab2
                     }
                 }
             }
-            else
+            else   // любой другой ввод будем считать генерацией
             {
                 TypeText("\nСкільки чисел бажаєте згенерувати? ");
                 if (int.TryParse(Console.ReadLine(), out int count) && count > 0)
@@ -167,6 +184,11 @@ namespace lab2
                     Random rand = new Random();
                     for (int i = 0; i < count; i++)
                     {
+                        // задаем диапазон
+                        // rand.NextDouble() число от 0.0 до 1.0
+                        // * 40 - 20 диапозон от -20.0 до + 20.0
+                        // Math.Round(... , 2) округляем до двух знаков после запятой
+                        
                         double value = Math.Round(rand.NextDouble() * 40 - 20, 2);
                         list.Add(value);
                     }
@@ -179,7 +201,7 @@ namespace lab2
                     Console.ResetColor();
                 }
             }
-
+            //Вывод результата
             TypeText("\nСписок: " + string.Join("  ", list));
             return list;
         }
