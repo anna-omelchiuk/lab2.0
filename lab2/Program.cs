@@ -11,7 +11,7 @@ namespace lab2
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            bool continueProgram = true; // флаг, пока true — программа работает
+            bool continueProgram = true;
 
             while (continueProgram)
             {
@@ -22,9 +22,8 @@ namespace lab2
                 TypeText("\n0. Вихід");
                 TypeText("\nВаш вибір: ");
 
-                string choice = Console.ReadLine()?.Trim(); // прочитываем, что написал пользователь,
-                                                        //убраем лишние пробелы, и если вдруг null
-                                                       //(пользователь ничего не ввел) — не даем программе упасть
+                string choice = Console.ReadLine()?.Trim();
+                                                        
 
                 switch (choice)
                 {
@@ -64,7 +63,7 @@ namespace lab2
             // Список вещественных чисел 
             List<double> numbers = ListOfDoubles();
 
-            // Проверка если пользователь нычего не ввел
+            
             if (numbers.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -76,16 +75,14 @@ namespace lab2
             // Ищем индекс первого отрицательного элемента
             int index = -1; // Индекс -1 означает, что не нашли 
             
-            for (int i = 0; i < numbers.Count; i++)  // .Count своцство которое есть у любого объекта списка
+            for (int i = 0; i < numbers.Count; i++) 
             {
-                if (numbers[i] < 0)  // Если число отрицательное
+                if (numbers[i] < 0)
                 {
-                    index = i;     // запоминаем его позицию
+                    index = i;
                     break;
                 }
             }
-
-            // Выводим результат взависимости от того, нашли отрицательное или нет
             
             if (index != -1)
             {
@@ -107,7 +104,6 @@ namespace lab2
             // Список целых чисел
             List<int> numbers = ListOfIntegers();
 
-            // Проверка на пустой список
             if (numbers.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -124,12 +120,11 @@ namespace lab2
             foreach (int num in numbers)
             {
                 if (num > 0)
-                    positive.Add(num);  // положительные пойдут в спысок позитивных
+                    positive.Add(num);  // положительные пойдут в список позитивных
                 else if (num < 0)
                     negative.Add(num); // негативные пойдут в список негативных
             }
 
-            // Вывод результатов
             TypeText("\nДодатні числа:");
             PrintList(positive, "додатних");
 
@@ -137,15 +132,13 @@ namespace lab2
             PrintList(negative, "від'ємних");
         }
 
-        ///////////////////////////////////////////////////////////////////// Функції для введення списків
+        ///////////////////////////////////////////////////////////////////// Функции для введения списков
 
 
         static List<double> ListOfDoubles()
         {
             // Создаем пустой список
             List<double> list = new List<double>();
-
-            // Просим ввод пользователя
             
             TypeText("\nЯкщо бажаєте ввести числа вручну введіть (в).\nЯкщо хочете згенерувати випадкові числа введіть (г). \nВаш вибір: ");
             string mode = Console.ReadLine()?.Trim().ToLower();
@@ -201,7 +194,6 @@ namespace lab2
                     Console.ResetColor();
                 }
             }
-            //Вывод результата
             TypeText("\nСписок: " + string.Join("  ", list));
             return list;
         }
